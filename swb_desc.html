@@ -1,0 +1,160 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>swb_desc</title>
+	<script>
+    window.MathJax = {
+        tex: {
+            tags: "ams"
+        }
+    };
+</script>
+	<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script type="text/javascript" id="MathJax-script" async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
+</head>
+
+<body>
+<h3> Using the app </h3>
+The  app  presents  the  results  of  a  water  balance  model,  calculated  based  on  the  average  monthly temperature and precipitation (NOAA NCEI; Arguez et al., 2012), soil water holding capacity (NRCS gNATSGO;  Soil  Survey  Staff,  2020),  and  latitude  of  the  site.   There  is  more  informaton  about  the model below, and a diagram of the conceptual model in the “Model Diagram” tab.<br>
+<br>
+<b>To change the place for which the balance is calculated:</b> choose a site from the dropdown menu or by clicking a marker in the Map tab.<br>
+<b>Dataset 1 and Dataset 2: </b> You can show two water balances for your chosen site using the app, dataset 1 and dataset 2. The two water balances are denoted in the plots with "1" and "2". This allows you to either compare two sets of climate normals or to make changes to the model parameter and then compare to the original values <br>
+<b>To compare two sets of climate normals:</b> Select one time period for dataset 1 and another for datset 2, without changing any sliders. <br>
+<b>To compare your changed parameters or data with the original: </b> select the SAME time period for dataset 1 and 2. Any changes you make with the sliders will only affect dataset 1.<br>
+<b>To change the soil water capacity:</b> use the slider in the side bar.<br>
+<b>To adjust the PET by changing the latitude of the site:</b> use the slider in the side bar.<br>
+<b>To change the temperature values: </b> increase or decrease all values by using the slider in the side bar. Alternatively, change individual values by double-clicking them in the "View/Edit Data" tab.<br>
+<b>To change the precipitation values: </b> increase or decrease all values by using the slider in the side bar. Alternatively, change individual values by double-clicking them in the "View/Edit Data" tab.<br>
+<b>To reset the values to the default for the site:</b> select the site again.<br>
+<b>To enter your own values:</b> use the drop-down menu to select "User Input", add your precipitation and temperature values by double clicking each field in the "View/Edit Data" tab, adjust your soil water capacity and latitude using the sliders in the side bar.<br>
+<b> To save output from the model:</b> go to the "Output Data" tab and at the bottom, provide a name for your file and click "Download These Data." <br>
+<b>To search for sites:</b> users can search for sites by typing in the dropdown field.<br>
+<br>
+<h3> This app runs a Thornthwaite-type monthly water balance model </h3>
+
+Thornthwaite-type monthly water-balance models (Black, 2007; Dunne & Leopold, 1978; Thornthwaite & Mather, 1955, 1957), are lumped conceptual models that can be used to simulate steady-state seasonal (climatic average) or continuous values of watershed or regional water input, snowpack, soil moisture, and evapotranspiration (Dingman, 2015). Thornthwaite-type models have been applied to variety of settings (e.g., Alley, 1985; McCabe & Markstrom, 2007; Steenhuis & Van der Molen, 1986; Westenbroek et al., 2010; Willmott et al., 1985). Input for such models consists of monthly values of precipitation, \(P_m\), and temperature, \(T_m\), representative of the region of interest. For steady-state applications (i.e., when \(\Delta S \approx 0\) in the water balance equation or when long-term input and output fluxes sum to equal each other), these values are monthly climatic averages. Such models typically have a single parameter, the soil-water storage capacity or the available water storage of the soil in the watershed, \(S_C\) , which is defined as:<br>
+
+\begin{equation}
+    S_C = (\theta_{fc} - \theta_{pwp}) \cdot Z_{rz}
+\end{equation}
+	
+where \(\theta_{fc}\) is the field capacity, \(\theta_{pwp}\) is the plant permanent wilting point, and \(Z_{rz}\) the vertical extent of the root zone (often assumed as 1 m). The difference between \(\theta_{fc}\) and \(\theta_{pwp}\) is the (plant) available water capacity, which is expressed as a fraction of total volume of soil (inches of water per inches of soil or cm<sup>3</sup> of water per cm<sup>3</sup> of soil, etc.) and is the water available for transpiration.  The average available water capacity (i.e., \(\theta_{fc}-\theta_{pwp}\)) for watersheds in this app is the Available Water Storage measure for 100 cm of soil from the Natural Resource Conservation Service (NRCS) gNATSGO database (Soil Survey Staff, 2020).<br>
+<br>
+All  water  quantities  in  the  model  represent  depths  (volumes  per  unit  area)  of  liquid  water  in  mm; inputs and outputs are monthly totals and snowpack and soil storage are end-of-month values.  This app version of the Thornthwaite-type water balance follows Dingman (2015) and Dunne and Leopold (1978). <br>
+<br>
+<b>Snowpack, Snowmelt, and Water Input</b><br>
+<br>
+Monthly precipitation is divided into rain, \(RAIN_m\), and snow, \(SNOW_m\), where <br>
+	
+\begin{equation}
+    RAIN_m = F_m \cdot P_m,
+\end{equation}
+    
+<center>and</center>
+	
+\begin{equation}
+    SNOW_m = (1 – F_m) \cdot P_m,
+\end{equation}
+
+in which \(F_m\) is the melt factor. Following Figure 1, \(F_m\) is computed as follows: <br>
+<br>
+\begin{equation}
+        F_m = 
+\begin{cases}
+    0,& \text{if } T_m \leq 0^\circ \text{C} \\
+    0.167 \cdot T_m, & \text{if } 0^\circ \text{C} < T_m < 6^\circ \text{C} \\
+    1, & \text{if } T_m \geq 6^\circ \text{C}
+\end{cases}
+\end{equation}  
+
+	<center>
+	<img src="melt_factor_graph.png" width="400"  alt="Graph of melt factor" align="center"/><br><br>
+	Figure 1. Monthly melt factor based on air temperature.  Slope of the line between \(0^\circ\)C and \(6^\circ\)C is 0.167 \(^\circ\)C,<sup>-1</sup>.
+	</center>
+	
+<br>
+The melt factor is also used in a temperature-index snowmelt model to determine the monthly snowmelt, \(MELT_m\), as<br>
+<br>
+\begin{equation}
+    MELT_m = F_m \cdot (PACK_{m-1} + SNOW_m),	
+\end{equation}
+	
+where \(PACK_{m-1}\) is the snowpack water equivalent at the end of month \(m − 1\). The snowpack at the end of month \(m\) is then computed as<br>
+\begin{equation}
+    PACK_m = (1-F_m)^2 \cdot P_m +(1 -F_m) \cdot PACK_{m-1}	
+\end{equation}
+    <br>
+By definition, the water input \(W_m\), is<br>
+<br>
+\begin{equation}
+    W_m = RAIN_m + MELT_m.	
+\end{equation}
+    
+    
+<b>Evapotranspiration and Soil Moisture</b> <br>
+    <br>
+Potential evapotranspiration in this model is calculated using the Thornthwaite (1948) method.  The model assumes, if \(W_m \geq PET_m\), \(ET_m\) takes place at the potential rate, i.e., <br>
+
+\begin{equation}
+    ET_m = PET_m
+\end{equation}
+	
+and soil moisture increases or, if already at \(S_C\), remains constant. Thus<br>
+
+\begin{equation}
+    SOIL_m = \text{min}\{[W_m-PET_m) + SOIL_{m-1}], S_C\},
+\end{equation}
+	
+where min\(\{...\}\) indicates the smaller of the quantities in the curly braces.  The Thornthwaite (1948) empirical formulation depends on the climatic average monthly temperature to calculate \(PET_m\) .\(PET_m\) is adjusted to account for the varying number of days per month and hours of daylight (Criddle, 1958).<br>
+<br>
+	
+If \(W_m&lt;PET_m,\) \(ET_m\) is the sum of water input and an increment removed from soil storage; that is,<br>
+	
+\begin{equation}
+    ET_m = W_m + SOIL_{m-1} - SOIL_m,
+\end{equation}
+	
+where the decrease in soil storage is modeled via the following conceptualization assuming an exponential drainage function:<br>
+
+\begin{equation}
+    SOIL_m=-SOIL_{m-1} \cdot \left[1-\exp \left(-\frac{PET_m-W_m}{S_{C}}\right)\right]-SOIL_{m-1}
+\end{equation}
+    
+    
+<b>Computation</b><br>
+<br>
+If the model is used with climatic monthly averages, the computations in Equations (3-5), (9), (10), and (11) are "wrapped around" from \(m=12\) to \(m=1\) so that \(m-1=12\) when \(m=1\). Thus, the computations are circular and must be iterated until all the monthly quantities converge to constant values. This model iterates 100 times to get the quantities to converge.<br>
+<br>
+
+<b>Overall Water Balance</b><br>
+<br>
+The model outputs monthly values that are then graphed to give a concise picture of the annual cycle of inputs, soil and snowpack storage, evaporation, and water available for groundwater recharge and streamflow at any location. Table 1 is water balance output for Blacksburg, VA, at 37.2 \(^\circ\)N latitude; the annual values are the sums of the monthly values. Note that the annual precipitation and water input are equal, as must be the case. The snowpack begins to build up in December, reaches a peak in February, and melts in March. \(ET=PET\) for the months when \(W>PET\)  and there is adequate supply of soil-water storage (\(SOIL\)) for the evaporative demand (October-May). Soil-water storage is recharged by rain in October and reaches its capacity the following month. It declines in the period from June to September because \(PET > P\) and some of the evaporative demand is satisfied by withdrawal of water from soil storage. The last line, \(W-ET-\Delta SOIL\), is the average monthly <q>water surplus</q> (i.e., the water available for recharge and runoff).
+<br><br>
+	
+Table 1. Output of Thornthwaite-type Monthly Water Balance for Blacksburg, VA. Temperatures in \(^\circ\)C, water-balance terms in mm. \(S_C\) = 140 mm.<br>
+<img src="Soil_water_balance_Blacksburg.png" width="1000" alt="Table of water balance output from app from Blacksburg, VA" align="center"/>
+	<br><br>
+
+<b>References</b><br>
+
+<p>Alley,  W.  M.  (1985).  Water  balance  models  in  one-month-ahead  streamflow  forecasting. Water Resources Research, 21(4), 597–606.</p>
+<p>Arguez,  A.,  Durre,  I.,  Applequist,  S.,  Vose,  R.  S.,  Squires,  M.  F.,  Yin,  X.,  Heim,  R.  R.,  &  Owen,T. W. (2012). NOAA’s 1981–2010 U.S. climate normals: An overview. Bulletin of the American Meteorological Society, 93(11), 1687–1697.</p>
+<p>	
+Black, P. E. (2007). Revisiting the Thornthwaite and Mather water balance. JAWRA Journal of the American Water Resources Association, 43(6), 1604–1605.</p>
+<p>Criddle, W. D. (1958). Methods of computing consumptive use of water.Journal of the Irrigation and Drainage Division, 84(1), 1–27.</p>
+<p>Dingman, S. L. (2015). Physical Hydrology (3rd ed.). Waveland Press.</p>
+<p>Dunne, T., & Leopold, L. B. (1978). Water in Environmental Planning. W.H. Freeman; Company.</p>
+<p>McCabe, G. J., & Markstrom, S. L. (2007). A monthly water-balance model driven by a graphical user interface (Open-File report No. 2007-1088). US Geological Survey. Reston, VA.</p> 
+<p>Soil  Survey  Staff.  (2020). Gridded  National  Soil  Survey  Geographic  (gNATSGO)  Database  for  theConterminous  United  States [United  States  Department  of  Agriculture,  Natural  Resources Conservation Service, December 1, 2020 (FY2020 official release)].</p>
+<p>Steenhuis, T., & Van der Molen, W. (1986). The Thornthwaite-Mather procedure as a simple engineering method to predict recharge. Journal of Hydrology, 84(3-4), 221–229.</p>
+<p>Thornthwaite,  C.  W.  (1948).  An  approach  toward  a  rational  classification  of  climate. Geographical Review, 38(1), 55–94.</p>
+<p>Thornthwaite, C. W., & Mather, J. R. (1955). The water balance.Publications in Climatology, 8, 1–104.</p>
+<p>Thornthwaite, C. W., & Mather, J. R. (1957). Instructions and tables for computing potential evapotranspiration and the water balance. Publications in Climatology, 10(3), 311.</p>
+<p>Westenbroek,  S.  M.,  Kelson,  V.,  Dripps,  W.,  Hunt,  R.,  &  Bradbury,  K.  (2010). SWB–a  modifiedThornthwaite-Mather soil-water-balance code for estimating groundwater recharge (Techniques and Methods 6-A31). US Geological Survey.</p>
+<p>Willmott, C. J., Rowe, C. M., & Mintz, Y. (1985). Climatology of the terrestrial seasonal water cycle. Journal of Climatology, 5(6), 589–606.</p>
+	
+</body>
+</html>

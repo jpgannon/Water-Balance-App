@@ -1,0 +1,13 @@
+name: Hydro_Teaching_Budget
+title: Hydro_Teaching_Budget
+username:
+account: wcu-hydro
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3589317
+bundleId: 4894969
+url: https://vt-hydroinfo.shinyapps.io/Hydro_Teaching_Budget/
+when: 1628255145.96245
+lastSyncTime: 1628255145.96246
+asMultiple: FALSE
+asStatic: FALSE
