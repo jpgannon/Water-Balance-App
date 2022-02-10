@@ -88,7 +88,7 @@ ui <- fluidPage(
                         value = 0),
             h4(strong("Dataset 2")),
             selectInput(inputId = "PeriodComp", 
-                        label = "Select climage values 
+                        label = "Select climate values 
                         to add as a comparison, 
                         (use NA if 'user input' is selected)",
                         choices = c(unique(PT$Period), "NA"),
